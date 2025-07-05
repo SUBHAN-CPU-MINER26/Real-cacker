@@ -9,9 +9,6 @@
       "extensions": ["ms-azuretools.vscode-docker"]
     }
   },
-  "mounts": [
-    "source=/tmp/docker-data,target=/tmp/docker-data,type=volume"
-  ],
   "features": {},
   "remoteUser": "root"
 }
