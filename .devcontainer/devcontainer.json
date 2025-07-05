@@ -1,0 +1,17 @@
+{
+  "name": "Windows10 in Codespace via Docker",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-azuretools.vscode-docker"]
+    }
+  },
+  "mounts": [
+    "source=/tmp/docker-data,target=/tmp/docker-data,type=volume"
+  ],
+  "features": {},
+  "remoteUser": "root"
+}
