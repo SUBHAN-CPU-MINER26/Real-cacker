@@ -1,29 +1,30 @@
 #!/bin/bash
 set -e
 
-echo "🔧 Setting up Docker with custom data-root at /tmp/docker-data..."
+echo "📦 Checking available storage..."
+df -h /tmp
 
-# Create custom Docker data dir
+echo "🗃️ Creating Docker data directory..."
 sudo mkdir -p /tmp/docker-data
 
-# Write custom daemon config
+echo "⚙️ Setting Docker data-root config..."
 sudo bash -c 'cat <<EOF > /etc/docker/daemon.json
 {
   "data-root": "/tmp/docker-data"
 }
 EOF'
 
-# Restart Docker
-echo "🔁 Restarting Docker..."
-sudo service docker restart || sudo systemctl restart docker
+echo "🔁 Restarting Docker service..."
+sudo systemctl restart docker || sudo service docker restart
+sleep 3
 
-# Wait for Docker
-sleep 5
+echo "✅ Docker restarted and configured!"
 
-echo "✅ Docker restarted with custom config"
+echo "🧠 Loading environment variables..."
+export $(grep -v '^#' .devcontainer/.env | xargs)
 
-# Pull and run Windows10 container
-echo "🚀 Starting Windows10 container using docker-compose..."
+echo "🚀 Starting Windows10 container..."
 docker-compose -f .devcontainer/windows10.yml up -d
 
-echo "✅ Container started. You can RDP into it via port 3389 (or use browser if supported)."
+echo "✅ Windows10 container is starting!"
+echo "Use RDP to connect to port 3389 or web at port 8006 (if exposed)."
